@@ -452,7 +452,7 @@ class: split-two
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 .column.bg-main1[
 .font2.comfortaa.coral[Prediction of Seasonal Agricultural Productivity Anomalies Derived from MODIS Data for the Cultivated Land of Chile]<br></br></br>
-.font2.comfortaa[Dr. Francisco Zambrano  Bigiarini <br><br> Researcher at .yellow[Hémera]<br>]
+.font1.comfortaa[Francisco Zambrano, Anton Vrieling, Andy Nelson, Muichele Meroni, and Tsegaye Tadesse <br><br><br>]
 <img src="slide_img/logo_hemera.png" width=20%><img src="slide_img/Logo-UMAYOR.png" width=10%><br>
 .font1.comfortaa[`r anicon::faa('link', animate='vertical', rtext='&nbsp;hemera.umayor.cl', color='white')` <br>]
 
