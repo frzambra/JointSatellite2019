@@ -41,7 +41,7 @@ class: split-two
 </br>
 <img src="slide_img/ams_CENT_tall_tag.png" width=10%><img src="slide_img/noaa.jpg" width=10%><img src="slide_img/EUMETSAT.jpg" width=25%><br>
 October 3, 2019]
-.font1.comfortaa[`r anicon::faa('link', animate='vertical', rtext='&nbsp;https://bit.ly/2nMINjf', color='white')`
+.font1.comfortaa[`r anicon::faa('link', animate='vertical', rtext='&nbsp;https://frzambra.github.io/JointSatellite2019/Slides-JointSatellite2019', color='white')`
 ]
 ]
 .column.bg-main3.center[
@@ -461,7 +461,7 @@ class: split-two
 </br>
 <img src="slide_img/ams_CENT_tall_tag.png" width=10%><img src="slide_img/noaa.jpg" width=10%><img src="slide_img/EUMETSAT.jpg" width=25%><br>
 October 3, 2019]
-.font1.comfortaa[`r anicon::faa('link', animate='vertical', rtext='&nbsp;https://bit.ly/2nMINjf', color='white')`
+.font1.comfortaa[`r anicon::faa('link', animate='vertical', rtext='&nbsp;https://frzambra.github.io/JointSatellite2019/Slides-JointSatellite2019', color='white')`
 ]
 ]
 .column.bg-main3.center[
