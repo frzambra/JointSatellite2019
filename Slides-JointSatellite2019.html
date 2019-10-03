@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Sequía agrícola</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="  Francisco Zambrano" />
+    <link href="libs/font-awesome-animation/font-awesome-animation-emi.css" rel="stylesheet" />
+    <script src="libs/fontawesome/js/fontawesome-all.min.js"></script>
+    <link href="libs/font-awesome/css/fontawesome-all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/shinobi.css" type="text/css" />
+    <link rel="stylesheet" href="assets/ninpo.css" type="text/css" />
+    <link rel="stylesheet" href="assets/ninjutsu.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+exclude: true
+&lt;style type="text/css"&gt;
+code.r{
+  font-size: 16px;
+}
+pre {
+  font-size: 16px !important;
+}
+&lt;/style&gt;
+
+---
+class: split-two
+&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"&gt;
+.column.bg-main1[
+.font2.comfortaa.coral[Prediction of Seasonal Agricultural Productivity Anomalies Derived from MODIS Data for the Cultivated Land of Chile]&lt;br&gt;&lt;/br&gt;&lt;/br&gt;
+.font2.comfortaa[Dr. Francisco Zambrano  Bigiarini &lt;br&gt;&lt;br&gt; Researcher at .yellow[Hémera]&lt;br&gt;]
+&lt;img src="slide_img/logo_hemera.png" width=20%&gt;&lt;img src="slide_img/Logo-UMAYOR.png" width=10%&gt;&lt;br&gt;
+.font1.comfortaa[<span>&lt;i class="fas  fa-link faa-vertical animated " style=" color:white;"&gt;&lt;/i&gt;&amp;nbsp;hemera.umayor.cl</span> &lt;br&gt;]
+
+.font1.comfortaa[<span>&lt;i class="fab  fa-github faa-pulse animated " style=" color:white;"&gt;&lt;/i&gt; frzambra</span> &lt;br&gt; <span>&lt;i class="fab  fa-twitter faa-pulse animated " style=" color:00acee;"&gt;&lt;/i&gt; @frzambra</span>&lt;br&gt;<span>&lt;i class="fas  fa-envelope faa-pulse animated " style=" color:white;"&gt;&lt;/i&gt; francisco.zambrano@umayor.cl</span>&lt;br&gt;]
+.font_large[2019 Joint Satellite Conference, Boston, MA, USA 
+&lt;/br&gt;
+&lt;img src="slide_img/ams_CENT_tall_tag.png" width=10%&gt;&lt;img src="slide_img/noaa.jpg" width=10%&gt;&lt;img src="slide_img/EUMETSAT.jpg" width=25%&gt;&lt;br&gt;
+October 3, 2019]
+.font1.comfortaa[<span>&lt;i class="fas  fa-link faa-vertical animated " style=" color:white;"&gt;&lt;/i&gt;&amp;nbsp;https://bit.ly/2nMINjf</span>
+]
+]
+.column.bg-main3.center[
+.vmiddle[&lt;img src="slide_img/sequia_agricola_araucania.gif" width=95%&gt;]
+]
+&lt;!-- --- --&gt;
+&lt;!-- class: bg-main1 --&gt;
+
+&lt;!-- # Why am I here? --&gt;
+
+&lt;!-- -- --&gt;
+&lt;!-- ### Teach you how to code in R ❌ --&gt;
+
+&lt;!-- -- --&gt;
+&lt;!-- ### Teach you how you *should* use R ✔️ --&gt;
+
+&lt;!-- -- --&gt;
+&lt;!-- ### Teach you how to make writing R code enjoyable ✔️ --&gt;
+
+&lt;!-- -- --&gt;
+&lt;!-- ### Teach you how to learn R ✔️ --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- class: middle bg-main1 --&gt;
+
+&lt;!-- # How most academics learn R --&gt;
+
+&lt;!-- &lt;img src="slide_img/throw_into_pool.gif" width=50%&gt; --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- class: middle bg-main1 --&gt;
+
+&lt;!-- # How .yellow[should] you use R? --&gt;
+
+---
+layout: true
+---
+class: split-two with-border border-white fade-row2-col1 fade-row3-col1 fade-row4-col1
+
+.column[
+  .split-four[
+  .row.bg-main1[.content.font2[
+What is the .yellow[problem] and how we .yellow[addressed] it?
+  ]]
+  .row.bg-main4[.content.font2[
+Deriving the proxy (.yellow[output]) <span>&lt;i class="fas  fa-map-marker-alt faa-float animated " style=" color:yellow;"&gt;&lt;/i&gt;</span> 
+]]
+  .row.bg-main4[.content.font2[
+Predictor variables <span>&lt;i class="fas  fa-chart-line faa-float animated "&gt;&lt;/i&gt;</span>
+]]
+  .row.bg-main4[.content.font2[
+Prediction models <span>&lt;i class="fas  fa-walking faa-float animated "&gt;&lt;/i&gt;</span>]]
+]]
+
+.column.bg-main1[.content.center.vmiddle[
+&lt;!-- &lt;img src="slide_img/GRETA-TRUMP-740x430.jpg" width=80%&gt; --&gt;
+&lt;img src="slide_img/2014-2018-global-temperatures-gif.gif" width=80%&gt;
+]]
+
+
+&lt;!-- --- --&gt;
+&lt;!-- class: hide-row2-col1 hide-row3-col1 hide-row4-col1  --&gt;
+&lt;!-- &lt;img src="slide_img/GRETA-TRUMP-740x430.jpg" width=80%&gt; --&gt;
+&lt;!-- &lt;img src="slide_img/2014-2018-global-temperatures-gif.gif" width=80%&gt; --&gt;
+&lt;!-- --- --&gt;
+&lt;!-- class: hide-row3-col1 hide-row4-col1 --&gt;
+&lt;!-- &lt;img src="slide_img/sf_hex.gif" width=40%&gt; --&gt;
+&lt;!-- &lt;img src="slide_img/r4ds.png" width=40%&gt; --&gt;
+&lt;!-- &lt;img src="slide_img/chripsck_overflow.png" width=40%&gt; --&gt;
+&lt;!-- --- --&gt;
+&lt;!-- class: hide-row4-col1 --&gt;
+&lt;!-- &lt;img src="slide_img/DeepLearn.png" width=80%&gt; --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- class: --&gt;
+&lt;!-- &lt;img src="slide_img/travolta.gif" width=80%&gt; --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- class: fade-row2-col1 fade-row3-col1 fade-row4-col1  --&gt;
+---
+layout: false
+class: bg-main1
+
+# Cultivated land of Chile
+
+.center[&lt;img src="slide_img/study_area_chile.jpg" width=110%&gt;]
+
+
+---
+layout: false
+class: bg-main1
+
+# .yellow[Agricultural drought] in Chile
+
+.font2.comfortaa[A persistent .yellow[rainfall deficit] has been affecting Central-South Chile .yellow[since 2007].]
+
+.center[&lt;img src="slide_img/SPI12_zcNDVI_2000-2017.png" width=85%&gt;]
+
+&lt;!-- --- --&gt;
+&lt;!-- layout: false --&gt;
+&lt;!-- class: bg-main1 --&gt;
+&lt;!-- # .yellow[Sequía] en Chile --&gt;
+
+&lt;!-- ## Año 2019 --&gt;
+
+&lt;!-- .center[&lt;img src="slide_img/declaEmergenciaAgricola.png" width=80%&gt;] --&gt;
+
+---
+layout: false
+class: bg-main1
+# How we can study agricultural drought at regional scale?
+
+.font2.comfortaa[
+- Crop growth model <i class="fas  fa-times "></i>
+
+- Agricultural census (yield, production, ) <i class="fas  fa-times "></i>
+
+- Using a .yellow[proxy] for agricultural productivity. <i class="fas  fa-check "></i>
+  - Commonly by vegetation indices (VIs) derived from satellite images.
+  - NDVI one o the most common used indices.
+
+]
+
+
+---
+class: bg-main1
+
+# .yellow[Proxy] proposed by our study
+
+.font2.comfortaa[Cumulative NDVI within the growing season]
+
+.center[&lt;img src="slide_img/proxy_zcNDVI.png" width=80%&gt;]
+
+---
+class: bg-main1
+
+# Proposed prediction by our study
+
+.font2.comfortaa[
+- What we want to predict .yellow[(output)]? the proxy of agricultural productivity .yellow[(zcNDVI)]
+
+- What variables we used for the prediction (.yellow[Inputs]):
+  - the proxy itself months before the end of the growing season (EOS).
+  - Standardized precipitation index (SPI) at 1-, 3-, 6-, 12- y 24-months .
+  - Climatic oscillation indices (PDO and MEI)
+
+- .yellow[When?:] forecast lead times from .yellow[one- to six-month] before the end of the growing season (EOS)
+
+- .yellow[Where?:] at census units, considering those which has cultivated land.
+]
+
+---
+class: split-two with-border border-white fade-row1-col1 fade-row3-col1 fade-row4-col1
+
+.column[
+  .split-four[
+  .row.bg-main1[.content.font2[
+What is the .yellow[problem] and how we .yellow[addressed] it?
+  ]]
+  .row.bg-main4[.content.font2[
+Deriving the proxy (.yellow[output]) <span>&lt;i class="fas  fa-map-marker-alt faa-float animated " style=" color:yellow;"&gt;&lt;/i&gt;</span> 
+]]
+  .row.bg-main4[.content.font2[
+Predictor variables (.yellow[inputs])
+]]
+  .row.bg-main4[.content.font2[
+Prediction models <span>&lt;i class="fas  fa-chart-line faa-float animated "&gt;&lt;/i&gt;</span>]]
+]]
+
+.column.bg-main1[.content.center.vmiddle[
+&lt;img src="slide_img/modis.png" width=80%&gt;
+&lt;img src="slide_img/sf_hex.gif" width=40%&gt;
+&lt;img src="slide_img/R_SpatialAnalytics.png" width=40%&gt;
+]]
+
+---
+layout: true
+class: split-two with-border border-white
+
+.column[
+  .split-four[
+  .row.bg-main1[.content.font2[
+Were determined the census units having &gt; 10% of cultivated land.
+  ]]
+  .row.bg-main4[.content.font2[
+Per census unit the Start Of the growing Season (SOS) was estimated
+]]
+  .row.bg-main4[.content.font2[
+Per census unit the End Of the growing Season (EOS) was estimated
+]]
+  .row.bg-main4[.content.font2[
+Finally, for each census units was calculated the proxy `\((zcNDVI)\)`]]
+]]
+
+.column.bg-main3[.content.center.vmiddle[
+{{content}}
+]] 
+
+---
+class: fade-row2-col1 fade-row3-col1 fade-row4-col1 
+&lt;img src="slide_img/study_area_croplands.png" width=40%&gt;
+---
+class: fade-row1-col1 fade-row3-col1 fade-row4-col1
+&lt;img src="slide_img/growing_season_sos.png" width=40%&gt;
+&lt;img src="slide_img/phenologyScale.png" width=40%&gt;
+---
+class: fade-row1-col1 fade-row2-col1 fade-row4-col1
+&lt;img src="slide_img/growing_season_length_EOS.png" width=40%&gt;
+&lt;img src="slide_img/phenologyScale.png" width=40%&gt;
+
+---
+class: fade-row1-col1 fade-row2-col1 fade-row3-col1
+ &lt;img src="slide_img/proxy_zcNDVI.png" width=100%&gt;
+&lt;img src="slide_img/ImageCube.png" width=40%&gt;
+&lt;img src="slide_img/tidy-2.png" width=40%&gt;
+
+---
+layout: false
+class: bg-main1
+
+# Validation of the .yellow[proxy]
+
+&lt;img src="slide_img/validation_proxy.jpg" width=60%&gt;
+&lt;img src="slide_img/Proxy-1.png" width=35%&gt;
+
+---
+class: split-two with-border border-white fade-row1-col1 fade-row2-col1 fade-row4-col1
+
+.column[
+  .split-four[
+  .row.bg-main1[.content.font2[
+What is the .yellow[problem] and how we .yellow[addressed] it?
+  ]]
+  .row.bg-main4[.content.font2[
+Deriving the proxy (.yellow[output]) <span>&lt;i class="fas  fa-map-marker-alt faa-float animated " style=" color:yellow;"&gt;&lt;/i&gt;</span> 
+]]
+  .row.bg-main4[.content.font2[
+Predictor variables (.yellow[inputs])
+]]
+  .row.bg-main4[.content.font2[
+Prediction models <span>&lt;i class="fas  fa-chart-line faa-float animated "&gt;&lt;/i&gt;</span>]]
+]]
+
+.column.bg-main1[.content.center.vmiddle[
+&lt;img src="slide_img/CHC_USAID_logos.png" width=80%&gt;
+&lt;img src="slide_img/modis.png" width=80%&gt;
+&lt;img src="slide_img/meiv2.timeseries.png" width=80%&gt;
+&lt;img src="slide_img/PDO_Phase.gif" width=80%&gt;
+]]
+
+---
+layout: true
+class: split-two with-border border-white
+
+.column[
+  .split-four[
+  .row.bg-main1[.content.font2[
+All the predictors (SPIs, PDO, and MEI) were calculated from the end of the season...
+  ]]
+  .row.bg-main4[.content.font2[
+...for forecasting lead times of one-month...
+]]
+  .row.bg-main4[.content.font2[
+...two-month...
+]]
+  .row.bg-main4[.content.font2[
+...until six-month...]]
+]]
+
+.column.bg-main3[.content.center.vmiddle[
+{{content}}
+]] 
+
+---
+class: fade-row2-col1 fade-row3-col1 fade-row4-col1
+&lt;img src="slide_img/pred_lead0.png" width=100%&gt;
+---
+class: fade-row1-col1 fade-row3-col1 fade-row4-col1
+&lt;img src="slide_img/pred_lead1.png" width=100%&gt;
+---
+class: fade-row1-col1 fade-row2-col1 fade-row4-col1
+&lt;img src="slide_img/pred_lead2.png" width=100%&gt;
+
+---
+class: fade-row1-col1 fade-row2-col1 fade-row3-col1
+&lt;img src="slide_img/pred_lead6.png" width=100%&gt;
+
+---
+layout: false
+class: split-two with-border border-white fade-row1-col1 fade-row2-col1 fade-row3-col1
+
+.column[
+  .split-four[
+  .row.bg-main1[.content.font2[
+What is the .yellow[problem] and how we .yellow[addressed] it?
+  ]]
+  .row.bg-main4[.content.font2[
+Deriving the proxy (.yellow[output]) <span>&lt;i class="fas  fa-map-marker-alt faa-float animated " style=" color:yellow;"&gt;&lt;/i&gt;</span> 
+]]
+  .row.bg-main4[.content.font2[
+Predictor variables (.yellow[inputs])
+]]
+  .row.bg-main4[.content.font2[
+Prediction models <span>&lt;i class="fas  fa-chart-line faa-float animated "&gt;&lt;/i&gt;</span>]]
+]]
+
+.column.bg-main1[.content.center.vmiddle[
+&lt;img src="slide_img/sf_hex.gif" width=40%&gt;
+&lt;img src="slide_img/r4ds.png" width=40%&gt;
+&lt;img src="slide_img/R_SpatialAnalytics.png" width=40%&gt;
+]]
+
+---
+layout: false
+class: bg-main1
+
+# Deep Learning vs Lineal regresion
+
+.font2.comfortaa[
+
+- We used a modeling scheme of .yellow[LOOCV (leave-one-out cross-validation)]
+- Leaving one season out each time
+
+.center[&lt;img src="slide_img/loocv.png" width=80%&gt;]
+
+&lt;!-- `$$RMSE_{cv} = \sqrt{\frac{\sum{(zcNDVI^S-\widehat{zcNDVI^S})^2}}{n}}$$` --&gt;
+
+&lt;!-- `$$R^2_{cv}$$` --&gt;
+
+]
+
+---
+class: bg-main1
+
+.font2.comfortaa[
+
+# Deep Learning vs Regresión Lineal
+
+
+- Deep Learning: package .yellow[H2O] `(LeDell et al., 2014)` in  <span>&lt;i class="fab  fa-r-project faa-bounce animated " style=" color:#165CAA;"&gt;&lt;/i&gt;</span> 
+  - Hyperparameter optimization .yellow[Random Grid Search]
+  - 15 predictors `X` 758 units `X` 17 seasons `X` 6 lead times = 1.159.740 data
+
+- Linear regresion: function .yellow[lm] in  <span>&lt;i class="fab  fa-r-project faa-pulse animated " style=" color:#165CAA;"&gt;&lt;/i&gt;</span>
+  - 12 predictors `X` 758 units `X` 17 seasons `X` 6 lead times = 927.792 regresions
+  - We selected the predictor that reach the minimum error `\((RMSE_{cv})\)`
+
+- Models evaluation: `\(RMSE_{cv}\)` y `\(R^2_{cv}\)`
+]
+---
+class: bg-main1
+
+# Results
+
+.center[&lt;img src="slide_img/boxplot_accuracies_r2.jpg" width=90%&gt;]
+
+---
+class: bg-main1
+
+# Results
+
+.center[&lt;img src="slide_img/boxplot_accuracies_rmse.jpg" width=90%&gt;]
+
+---
+class: bg-main1
+
+# Results
+## Linear regresion
+
+.center[&lt;img src="slide_img/olr_map.jpg" width=90%&gt;]
+
+---
+class: bg-main1
+
+# Results
+## Deep Learning
+
+.center[&lt;img src="slide_img/dl_map.jpg" width=90%&gt;]
+
+
+---
+layout: false
+class: bg-main1
+
+# Final remarks
+
+.font2.comfortaa[
+
+- Deep Learning (Black Box).
+
+- a simple linear regresion (.yellow[in this case]) equals Deep Learning
+
+- not enough data for Deep Learning `(LeDell, 2019)`
+
+- we should incorporate .yellow[soil moisture] as predictor
+
+- we .yellow[need] field data for validation
+]
+
+---
+class: bg-main1 center
+#Thanks!
+
+&lt;img src="slide_img/thank-you.gif" width=90%&gt;
+
+---
+class: split-two
+&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"&gt;
+.column.bg-main1[
+.font2.comfortaa.coral[Prediction of Seasonal Agricultural Productivity Anomalies Derived from MODIS Data for the Cultivated Land of Chile]&lt;br&gt;&lt;/br&gt;&lt;/br&gt;
+.font2.comfortaa[Dr. Francisco Zambrano  Bigiarini &lt;br&gt;&lt;br&gt; Researcher at .yellow[Hémera]&lt;br&gt;]
+&lt;img src="slide_img/logo_hemera.png" width=20%&gt;&lt;img src="slide_img/Logo-UMAYOR.png" width=10%&gt;&lt;br&gt;
+.font1.comfortaa[<span>&lt;i class="fas  fa-link faa-vertical animated " style=" color:white;"&gt;&lt;/i&gt;&amp;nbsp;hemera.umayor.cl</span> &lt;br&gt;]
+
+.font1.comfortaa[<span>&lt;i class="fab  fa-github faa-pulse animated " style=" color:white;"&gt;&lt;/i&gt; frzambra</span> &lt;br&gt; <span>&lt;i class="fab  fa-twitter faa-pulse animated " style=" color:00acee;"&gt;&lt;/i&gt; @frzambra</span>&lt;br&gt;<span>&lt;i class="fas  fa-envelope faa-pulse animated " style=" color:white;"&gt;&lt;/i&gt; francisco.zambrano@umayor.cl</span>&lt;br&gt;]
+.font_large[2019 Joint Satellite Conference, Boston, MA, USA 
+&lt;/br&gt;
+&lt;img src="slide_img/ams_CENT_tall_tag.png" width=10%&gt;&lt;img src="slide_img/noaa.jpg" width=10%&gt;&lt;img src="slide_img/EUMETSAT.jpg" width=25%&gt;&lt;br&gt;
+October 3, 2019]
+.font1.comfortaa[<span>&lt;i class="fas  fa-link faa-vertical animated " style=" color:white;"&gt;&lt;/i&gt;&amp;nbsp;https://bit.ly/2nMINjf</span>
+]
+]
+.column.bg-main3.center[
+.vmiddle[&lt;img src="slide_img/sequia_agricola_araucania.gif" width=95%&gt;]
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
